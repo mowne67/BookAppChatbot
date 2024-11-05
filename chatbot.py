@@ -32,14 +32,14 @@ def get_vector_store(text_chunks):
 def get_conversational_chain(docs, user_question):
     prompt_template = """
     You are a book chatbot that uses information from the book data in the context and provide useful answers to the user.
-    Answer the question as detailed as possible from the provided context, make sure to provide all the details, if the answer is not in
-    provided context just say what the context is talking about briefly, don't provide the wrong answer\n\n
+    Your answers should be professional like you are an expert in this field. Do not mention the word context. 
+    Provide you response in points. Always go in detail not only from the context but also your knowledge about the book. \n\n
     Context:\n {context}\n
     Question: \n{question}\n
     """
 
     model = ChatGoogleGenerativeAI(model="gemini-1.5-flash",
-                                   temperature=0.3)
+                                   temperature=0.6)
     prompt = ChatPromptTemplate.from_template(prompt_template)
     chain = prompt | model | StrOutputParser()
     return chain.invoke({"context": docs, "question": user_question})
